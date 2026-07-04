@@ -48,8 +48,22 @@ long long int sqroot(int num){
     return ans;
 }
 
+double morePrecision(int num, int precision, int tempsol){
+    double ans = tempsol, factor = 1;
+
+    for (int i = 0; i < precision; i++){
+            factor = factor / 10;
+
+        for (double j = ans; j * j <= num; j += factor){
+            ans = j;
+        }
+    }
+    return ans;
+}
+
 int main(){
-    int num = 10000;
-    cout << sqroot(num) << endl;
+    int num = 37;
+    int tempsol = sqroot(num);
+    cout << morePrecision(num ,3 ,tempsol) << endl;
     return 0;
 }

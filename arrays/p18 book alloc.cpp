@@ -35,6 +35,11 @@ int bookAlloc(int arr[],int n, int st){
     int s = 0;
     int sum = 0;
     int e;
+    int ans = -1;
+
+    if(st > n){
+        return ans;
+    }
 
     for (int i = 0; i < n; i++){
         sum += arr[i];
@@ -42,7 +47,6 @@ int bookAlloc(int arr[],int n, int st){
     e = sum;
 
     int m = s + (e - s) / 2;
-    int ans = -1;
 
     while(s<=e){
         if (isPossible( arr, n, st, m)){

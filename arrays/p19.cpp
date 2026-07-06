@@ -27,6 +27,10 @@ int minPaintTime(int arr[], int n, int painter){
     int s = 0, e;
     int ans = -1;
     int sum = 0;
+
+    if(painter>n){
+        return -1;
+    }
     
     for (int i = 0; i < n; i++){
         sum += arr[i];

@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-void subString(string str, size_t index, string output, vector<string>& ans){
+void subString(string str, int index, string output, vector<string>& ans){
     if(index >= str.length()){
         if(output.length() > 0){
             ans.push_back(output);

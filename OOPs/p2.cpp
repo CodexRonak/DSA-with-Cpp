@@ -24,5 +24,16 @@ int main(){
 
     cout << ronak.health << endl;
     cout << ronak.L_Getter() << endl;
+
+    // the output would be 8 because of padding and alignment
+    // Alignment means assigning the memory block of the datatypes in meaningfull or sensible manner and padding is unused space between two aligned datatypes
+    // memory block: 0   1   2   3   4   5   6   7
+    // Alignment:  char  p   p   p   -----int-----
+    //                  --padding--
+
+    //  instead of int if we used double it would have aligned from index 8 memory block instead of 1
+
+    cout << sizeof(ronak) << endl;
+
     return 0;
 }

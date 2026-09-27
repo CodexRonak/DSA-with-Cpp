@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 
+// Inheritence Ambiguity
 class A{
     public:
 

@@ -63,7 +63,7 @@ void insertAtMid(Node* &head, Node* &tail, int pos, int num){
     }
 }
 
-
+// appraoch 1
 void revList(Node* &head){
     Node *curr = head;
     Node *prev = NULL;
@@ -76,6 +76,31 @@ void revList(Node* &head){
         curr = forward;
     }
     head = prev;
+}
+
+// approach 2
+void recRevList(Node* &head, Node* curr, Node* prev){
+    if(curr == NULL){
+        head = prev;
+        return;
+    }
+
+    Node *forward = curr->next;
+    curr->next = prev;
+    recRevList(head, forward, curr);
+}
+
+// appraoch 3
+
+Node* rev(Node* head){
+    if(head == NULL || head->next == NULL){
+        return head;
+    }
+
+    Node *subhead = rev(head->next);
+    head->next->next = head;
+    head->next = NULL;
+    return subhead;
 }
 
 void print(Node* head){
@@ -113,7 +138,9 @@ int main(){
 
     cout << endl;
 
-    revList(head);
+    // revList(head);
+    // recRevList(head, head, NULL);
+    head = rev(head);
     print(head);
     return 0;
 }

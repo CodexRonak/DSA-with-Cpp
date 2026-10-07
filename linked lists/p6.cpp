@@ -31,7 +31,7 @@ void insertNode(Node* &tail, int val, int num){
     Node *currNode = tail->next;
     Node *nextNode = NULL;
 
-    while(currNode->data != val && currNode ->next != tail){
+    while(currNode->data != val && currNode != tail){
         currNode = currNode->next;
     }
     nextNode = currNode->next;
@@ -41,11 +41,17 @@ void insertNode(Node* &tail, int val, int num){
         return;
     }
 
+    
+
     Node *temp = new Node(num);
     currNode->next = temp;
     temp->prev = currNode;
     temp->next = nextNode;
     nextNode->prev = temp;
+
+    if(currNode == tail){ 
+        tail = temp;
+    }
 }
 
 void deleteNode(Node* &tail, int val){
@@ -81,13 +87,40 @@ void deleteNode(Node* &tail, int val){
 
 }
 
+void revList(Node* &tail){
+    if(tail == NULL || tail->next == tail){
+        return;
+    }
+
+    Node *temp = NULL;
+    Node *currNode = tail->next;
+    Node *headNode = tail->next;
+
+    do{
+        temp = currNode->prev;
+        currNode->prev = currNode->next;
+        currNode->next = temp;
+
+        currNode = currNode->prev;
+    } while (currNode != headNode);
+
+    tail = headNode; 
+} 
+
+
 void print(Node* tail){
-    Node *temp = tail;
+    if(tail == NULL){
+        cout << "Empty List" << endl;
+        return;
+    }
+
+    Node *head = tail->next;
+    Node *temp = head;
 
     do{
         cout << temp->data << " ";
         temp = temp->next;
-    } while (temp != tail);
+    } while (temp != head);
     cout << endl;
 }
 
@@ -101,11 +134,14 @@ int main(){
     insertNode(tail, 20, 30);
     print(tail);
     insertNode(tail, 30, 40);
-    print(tail);
-    deleteNode(tail, 20);
+    // print(tail);
+    // deleteNode(tail, 20);
 
     cout << tail->prev->data << endl;
     cout << tail->data << endl;
     cout << tail->next->data << endl;
+    print(tail);
+    
+    revList(tail);
     print(tail);
 }

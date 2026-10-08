@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 using namespace std;
 
 class Node{
@@ -105,7 +106,28 @@ void revList(Node* &tail){
     } while (currNode != headNode);
 
     tail = headNode; 
-} 
+}
+
+bool checkCycle(Node* tail){
+    if(tail == NULL){
+        return false;
+    }
+    
+    map<Node*, bool> visited;
+    Node *temp = tail->next;
+
+    while(temp != NULL){
+        if(visited[temp] == true){
+            cout << "present on element " << temp->data << endl;
+            return true;
+        }
+
+        visited[temp] = true;
+        temp = temp->next;
+    }
+
+    return false;
+}
 
 
 void print(Node* tail){
@@ -142,6 +164,13 @@ int main(){
     cout << tail->next->data << endl;
     print(tail);
     
-    revList(tail);
-    print(tail);
+    // revList(tail);
+    // print(tail);
+
+    if(checkCycle(tail)){
+        cout << "cycle is present" << endl;
+    }
+    else{
+        cout << "no cycle" << endl;
+    }
 }

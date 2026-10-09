@@ -130,6 +130,31 @@ bool checkCycle(Node* tail){
 }
 
 
+Node* floydCycleDetection(Node *tail){
+    Node *head = tail -> next;
+    if(head == NULL){
+        return NULL;
+    }
+
+    Node *slow = head;
+    Node *fast = head;
+
+    while(slow != NULL && fast != NULL){
+        fast = fast -> next;
+        
+        if(fast != NULL){
+            fast = fast -> next;
+        }
+
+        slow = slow -> next;
+
+        if(slow == fast){
+            return slow;
+        }
+    }
+}
+
+
 void print(Node* tail){
     if(tail == NULL){
         cout << "Empty List" << endl;
@@ -167,7 +192,14 @@ int main(){
     // revList(tail);
     // print(tail);
 
-    if(checkCycle(tail)){
+    // if(checkCycle(tail)){
+    //     cout << "cycle is present" << endl;
+    // }
+    // else{
+    //     cout << "no cycle" << endl;
+    // }
+
+    if(floydCycleDetection(tail) != NULL){
         cout << "cycle is present" << endl;
     }
     else{

@@ -11,6 +11,7 @@ public:
     }
 };
 
+
 void sort012(Node* &head){
 
     if(head == NULL || head->next == NULL){
@@ -64,6 +65,7 @@ void printList(Node* head){
     }
     cout << endl;
 }
+
 
 int main(){
     int n;

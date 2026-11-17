@@ -7,31 +7,40 @@ struct Node {
     Node(int d) : data(d), left(NULL), right(NULL) {}
 };
 
-// Function: pair.first = diameter, pair.second = height
-pair<int, int> diameterfast(Node* root) {
+// pair.first = sum tree hai ya nahi, pair.second = subtree ke saare nodes ka sum
+pair<bool, int> isSumTreeFast(Node* root) {
     if (root == NULL) {
-        return make_pair(0, 0);
+        return make_pair(true, 0);
     }
 
-    pair<int, int> left = diameterfast(root->left);
-    pair<int, int> right = diameterfast(root->right);
+    if (root->left == NULL && root->right == NULL) {
+        return make_pair(true, root->data);
+    }
 
-    int op1 = left.first;                    // diameter sirf left subtree me
-    int op2 = right.first;                   // diameter sirf right subtree me
-    int op3 = left.second + right.second;    // diameter root se guzre
+    pair<bool, int> leftAns = isSumTreeFast(root->left);
+    pair<bool, int> rightAns = isSumTreeFast(root->right);
 
-    pair<int, int> ans;
-    ans.first = max(op1, max(op2, op3));
-    ans.second = max(left.second, right.second) + 1;
+    bool left = leftAns.first;
+    bool right = rightAns.first;
+    bool condn = (root->data == leftAns.second + rightAns.second);
 
+    pair<bool, int> ans;
+
+    if (left && right && condn) {
+        ans.first = true;
+        ans.second = 2 * root->data;
+    } else {
+        ans.first = false;
+        ans.second = 0;
+    }
     return ans;
 }
 
-int diameter(Node* root) {
-    return diameterfast(root).first;
+bool isSumTree(Node* node) {
+    return isSumTreeFast(node).first;
 }
 
-
+// Level order input se tree banana (-1 matlab NULL)
 Node* buildTree(vector<int>& arr) {
     if (arr.empty() || arr[0] == -1) return NULL;
 
@@ -61,7 +70,7 @@ Node* buildTree(vector<int>& arr) {
 
 int main() {
     int n;
-    cout << "Enter the no. of values: ";
+    cout << "Enter the no. of Values ";
     cin >> n;
 
     vector<int> arr(n);
@@ -69,7 +78,11 @@ int main() {
     for (int i = 0; i < n; i++) cin >> arr[i];
 
     Node* root = buildTree(arr);
-    cout << "Diameter = " << diameter(root) << endl;
+
+    if (isSumTree(root))
+        cout << "Sum Tree" << endl;
+    else
+        cout << "Not a sum Tree" << endl;
 
     return 0;
 }
